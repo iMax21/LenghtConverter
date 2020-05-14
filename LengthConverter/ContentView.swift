@@ -11,19 +11,33 @@ import SwiftUI
 struct ContentView: View {
     @State private var input = "0"
     @State private var inputUnitSelected = 0
+    @State private var output = "0"
+    @State private var outputUnitSelected = 0
     
     var units = ["meters", "kilometers", "feet", "yard", "miles"]
     
     var body: some View {
         NavigationView {
             Form {
-                Section {
+                Section(header: Text("What do you want to convert?")) {
                     TextField("Input", text: $input)
-                    Picker("Measure", selection: $inputUnitSelected) {
+                    Picker("Unit", selection: $inputUnitSelected) {
                         ForEach(0..<units.count ) {
                             Text("\(self.units[$0])")
                         }
                     }
+                }
+                
+                Section(header: Text("In which unit?")) {
+                    Picker("Unit", selection: $outputUnitSelected) {
+                        ForEach(0..<units.count ) {
+                            Text("\(self.units[$0])")
+                        }
+                    }
+                }
+                
+                Section(header: Text("Result")) {
+                    Text("\(output) \(units[outputUnitSelected])")
                 }
             }
         }
